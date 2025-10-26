@@ -1,0 +1,53 @@
+{
+  "name": "zk-nft-bridge",
+  "version": "1.0.0",
+  "description": "Zero-Knowledge NFT Bridge - Cross-chain NFT transfer with ZK proof verification",
+  "private": true,
+  "workspaces": [
+    "contracts",
+    "relayer",
+    "frontend"
+  ],
+  "scripts": {
+    "setup": "./setup.sh",
+    "install:all": "pnpm install && cd contracts && forge install && cd ../relayer && pnpm install && cd ../frontend && pnpm install",
+    "build:contracts": "cd contracts && forge build",
+    "test:contracts": "cd contracts && forge test",
+    "deploy:contracts": "cd contracts && forge script script/Deploy.s.sol:DeployLocal --rpc-url http://localhost:8545 --broadcast --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
+    "start:relayer": "cd relayer && pnpm start",
+    "start:frontend": "cd frontend && pnpm dev",
+    "start:chains": "anvil --port 8545 --chain-id 1 & anvil --port 8546 --chain-id 421614 &",
+    "stop:chains": "pkill -f anvil",
+    "clean": "rm -rf node_modules contracts/node_modules relayer/node_modules frontend/node_modules contracts/cache contracts/out contracts/broadcast frontend/.next frontend/out",
+    "lint": "cd relayer && pnpm lint && cd ../frontend && pnpm lint",
+    "type-check": "cd relayer && pnpm type-check && cd ../frontend && pnpm type-check"
+  },
+  "keywords": [
+    "nft",
+    "bridge",
+    "cross-chain",
+    "zero-knowledge",
+    "zk-proof",
+    "ethereum",
+    "solidity",
+    "typescript",
+    "nextjs"
+  ],
+  "author": "ZK NFT Bridge Team",
+  "license": "MIT",
+  "devDependencies": {
+    "pnpm": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/zk-nft-bridge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/zk-nft-bridge/issues"
+  },
+  "homepage": "https://github.com/your-username/zk-nft-bridge#readme"
+}
