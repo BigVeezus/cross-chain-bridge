@@ -20,12 +20,14 @@ chmod +x setup.sh
 ## 📋 What This Does
 
 ### For Users (Simple)
+
 - **Bridge NFTs** between different blockchains
 - **Lock** your NFT on source chain → **Get** wrapped NFT on destination chain
 - **Unlock** wrapped NFT → **Get** original NFT back
 - **Batch operations** for gas efficiency
 
 ### For Developers (Technical)
+
 - **Lock & Mint Mechanism**: NFTs locked on source, wrapped NFTs minted on destination
 - **ZK Proof Verification**: Mock zero-knowledge proofs for demonstration
 - **Automated Relayer**: Watches events and automatically processes bridge operations
@@ -72,12 +74,14 @@ cross-chain-bridge/
 ## 🎮 How to Use
 
 ### 1. **Setup** (One-time)
+
 ```bash
 ./setup.sh
 # Choose option 12: Complete setup
 ```
 
 ### 2. **Use the Bridge**
+
 1. Visit `http://localhost:3000`
 2. Click "Connect Wallet" (auto-connects to first Anvil account)
 3. Click "Mint Test NFT" to create test NFTs
@@ -85,6 +89,7 @@ cross-chain-bridge/
 5. Watch the relayer automatically mint wrapped NFTs!
 
 ### 3. **Unlock NFTs**
+
 1. Select wrapped NFTs
 2. Click "Unlock NFT ←"
 3. Watch original NFTs get unlocked!
@@ -92,10 +97,11 @@ cross-chain-bridge/
 ## 🔧 Available Commands
 
 ### Setup Script Options
+
 ```bash
 ./setup.sh
 # 1) Check dependencies
-# 2) Install all dependencies  
+# 2) Install all dependencies
 # 3) Compile contracts
 # 4) Run tests
 # 5) Deploy contracts
@@ -110,6 +116,7 @@ cross-chain-bridge/
 ```
 
 ### Manual Commands
+
 ```bash
 # Install all dependencies
 pnpm install:all
@@ -134,35 +141,39 @@ pnpm clean
 
 ## 🌐 Services & Ports
 
-| Service | URL | Description |
-|---------|-----|-------------|
-| **Frontend** | `http://localhost:3000` | Web interface |
-| **Source Chain** | `http://localhost:8545` | Ethereum (Chain ID: 1) |
-| **Destination Chain** | `http://localhost:8546` | L2 (Chain ID: 421614) |
-| **Relayer** | Background process | Automated bridge processing |
+| Service               | URL                     | Description                 |
+| --------------------- | ----------------------- | --------------------------- |
+| **Frontend**          | `http://localhost:3000` | Web interface               |
+| **Source Chain**      | `http://localhost:8545` | Ethereum (Chain ID: 1)      |
+| **Destination Chain** | `http://localhost:8546` | L2 (Chain ID: 421614)       |
+| **Relayer**           | Background process      | Automated bridge processing |
 
 ## 🔍 Troubleshooting
 
 ### Common Issues
 
 **"Connect Wallet" not working?**
+
 - Make sure contracts are deployed (run option 5 in setup.sh)
 - Check that local chains are running
 
 **Relayer not processing?**
+
 - Check relayer logs for errors
 - Verify contract addresses in `.env` files
 - Ensure chains are running
 
 **TypeScript errors?**
+
 - Run `pnpm type-check` to verify compilation
 - All TypeScript issues have been resolved
 
 ### Reset Everything
+
 ```bash
 # Stop all services
 pkill -f anvil
-pkill -f relayer  
+pkill -f relayer
 pkill -f frontend
 
 # Clean and restart
@@ -174,6 +185,7 @@ pnpm clean
 ## 📊 Features
 
 ### ✅ Implemented
+
 - [x] Cross-chain NFT locking/unlocking
 - [x] Automated relayer service
 - [x] ZK proof verification (mock)
@@ -186,6 +198,7 @@ pnpm clean
 - [x] Unified setup script
 
 ### 🚧 Future Enhancements
+
 - [ ] Real ZK proof generation
 - [ ] Multiple chain support
 - [ ] Production deployment
@@ -207,12 +220,14 @@ forge test --match-test testMintWrappedNFT
 ## 📝 Smart Contracts
 
 ### Core Contracts
+
 - **SourceBridge**: Locks NFTs and emits events
 - **DestinationBridge**: Mints wrapped NFTs and handles burns
 - **MockNFT**: Test NFT for demonstration
 - **WrappedNFT**: Internal contract for wrapped NFTs
 
 ### Key Functions
+
 ```solidity
 // Lock single NFT
 function lockNFT(address nftContract, uint256 tokenId) external
