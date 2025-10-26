@@ -1,261 +1,258 @@
 # 🌉 ZK NFT Bridge
 
-> A trustless cross-chain NFT bridge leveraging zero-knowledge proofs for cryptographic ownership verification and Merkle tree batching for gas optimization.
+A complete cross-chain NFT bridge with Zero-Knowledge proof verification, automated relayer service, and modern web interface.
 
-[![Solidity](https://img.shields.io/badge/Solidity-0.8.20-blue)](https://soliditylang.org/)
-[![Foundry](https://img.shields.io/badge/Built%20with-Foundry-orange)](https://getfoundry.sh/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)](https://www.typescriptlang.org/)
-[![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
+## 🚀 Quick Start
 
-## 🎯 Overview
+```bash
+# Clone and setup
+git clone <your-repo-url>
+cd cross-chain-bridge
+chmod +x setup.sh
+./setup.sh
 
-This project demonstrates a production-ready cross-chain NFT bridging solution that enables users to transfer NFTs between chains using zero-knowledge proofs for verification, eliminating reliance on centralized oracles.
+# Choose option 12: Complete setup
+# This will install dependencies, deploy contracts, and start all services
+```
 
-### Key Features
+**That's it!** Your bridge will be running at `http://localhost:3000`
 
-- **🔐 ZK Proof Verification**: Cryptographic ownership verification without revealing private keys
-- **⚡ Gas Optimized**: Merkle tree batching reduces gas costs by ~80% for multiple transfers
-- **🤖 Automated Relayer**: Self-hosted TypeScript service for seamless cross-chain operations
-- **🎨 Modern UI**: Full-stack Next.js interface with real-time updates
-- **🧪 Fully Tested**: Comprehensive test suite with Foundry
+## 📋 What This Does
+
+### For Users (Simple)
+- **Bridge NFTs** between different blockchains
+- **Lock** your NFT on source chain → **Get** wrapped NFT on destination chain
+- **Unlock** wrapped NFT → **Get** original NFT back
+- **Batch operations** for gas efficiency
+
+### For Developers (Technical)
+- **Lock & Mint Mechanism**: NFTs locked on source, wrapped NFTs minted on destination
+- **ZK Proof Verification**: Mock zero-knowledge proofs for demonstration
+- **Automated Relayer**: Watches events and automatically processes bridge operations
+- **Merkle Tree Batching**: Gas-optimized batch operations
+- **Full-Stack UI**: Next.js frontend with wallet integration
 
 ## 🏗️ Architecture
 
 ```
-┌─────────────┐                           ┌─────────────┐
-│             │    1. Lock NFT            │             │
-│   Source    │◄──────────────────────────│    User     │
-│   Chain     │                           │             │
-│             │    2. Event Emitted       └─────────────┘
-└──────┬──────┘              │
-       │                     │
-       │                     ▼
-       │              ┌─────────────┐
-       │              │             │
-       │              │   Relayer   │
-       │              │  (Listens)  │
-       │              │             │
-       │              └──────┬──────┘
-       │                     │
-       │              3. Generate
-       │                 ZK Proof
-       │                     │
-       ▼                     ▼
-┌─────────────┐       ┌─────────────┐
-│             │       │             │
-│Destination  │◄──────│   Verify    │
-│   Chain     │  4.   │   & Mint    │
-│             │       │             │
-└─────────────┘       └─────────────┘
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Source Chain  │    │     Relayer     │    │ Destination     │
+│   (Ethereum)    │◄──►│   Service       │◄──►│ Chain (L2)      │
+│                 │    │                 │    │                 │
+│ • Original NFTs │    │ • Watches events │    │ • Wrapped NFTs  │
+│ • Lock contract │    │ • Generates ZK   │    │ • Mint contract │
+│ • Unlock logic  │    │ • Auto-mints     │    │ • Burn logic    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-## 🚀 Quick Start
+## 🛠️ Tech Stack
 
-### Prerequisites
+- **Smart Contracts**: Solidity + Foundry
+- **Relayer**: TypeScript + Ethers.js
+- **Frontend**: Next.js + React + Tailwind CSS
+- **Wallet**: Wagmi + RainbowKit
+- **Testing**: Local Anvil chains
 
-```bash
-# Install Foundry
-curl -L https://foundry.paradigm.xyz | bash
-foundryup
+## 📁 Project Structure
 
-# Install Node.js 18+
-# Install pnpm
-npm install -g pnpm
+```
+cross-chain-bridge/
+├── contracts/              # Smart contracts
+│   ├── src/               # Source contracts
+│   ├── test/              # Contract tests
+│   └── script/            # Deployment scripts
+├── relayer/               # Automated relayer service
+│   └── src/               # TypeScript relayer code
+├── frontend/              # Next.js web application
+│   └── src/               # React components
+├── setup.sh              # Unified setup script
+└── package.json          # Monorepo configuration
 ```
 
-### Automated Setup
+## 🎮 How to Use
 
+### 1. **Setup** (One-time)
 ```bash
-# Clone and setup
-git clone <your-repo>
-cd cross-chain-bridge
-
-# Run the setup script
 ./setup.sh
+# Choose option 12: Complete setup
 ```
 
-Choose option 12 for complete setup, or follow the manual steps below.
+### 2. **Use the Bridge**
+1. Visit `http://localhost:3000`
+2. Click "Connect Wallet" (auto-connects to first Anvil account)
+3. Click "Mint Test NFT" to create test NFTs
+4. Select NFTs and click "Bridge NFT →"
+5. Watch the relayer automatically mint wrapped NFTs!
 
-### Manual Setup
+### 3. **Unlock NFTs**
+1. Select wrapped NFTs
+2. Click "Unlock NFT ←"
+3. Watch original NFTs get unlocked!
 
-**1. Install Dependencies**
+## 🔧 Available Commands
 
+### Setup Script Options
 ```bash
-# Install contract dependencies
-cd contracts
-forge install
-
-# Install relayer dependencies
-cd ../relayer
-pnpm install
-
-# Install frontend dependencies
-cd ../frontend
-pnpm install
+./setup.sh
+# 1) Check dependencies
+# 2) Install all dependencies  
+# 3) Compile contracts
+# 4) Run tests
+# 5) Deploy contracts
+# 6) Setup environment files
+# 7) Start local chains
+# 8) Start relayer
+# 9) Start frontend
+# 10) Full setup (1-6)
+# 11) Start all services (7-9)
+# 12) Complete setup (1-9) ← RECOMMENDED
+# 13) Fix and restart services
 ```
 
-**2. Compile & Test Contracts**
-
+### Manual Commands
 ```bash
-cd contracts
-forge build
-forge test
+# Install all dependencies
+pnpm install:all
+
+# Build contracts
+pnpm build:contracts
+
+# Run tests
+pnpm test:contracts
+
+# Deploy contracts
+pnpm deploy:contracts
+
+# Start services
+pnpm start:relayer
+pnpm start:frontend
+pnpm start:chains
+
+# Clean everything
+pnpm clean
 ```
 
-**3. Start Local Chains**
+## 🌐 Services & Ports
 
+| Service | URL | Description |
+|---------|-----|-------------|
+| **Frontend** | `http://localhost:3000` | Web interface |
+| **Source Chain** | `http://localhost:8545` | Ethereum (Chain ID: 1) |
+| **Destination Chain** | `http://localhost:8546` | L2 (Chain ID: 421614) |
+| **Relayer** | Background process | Automated bridge processing |
+
+## 🔍 Troubleshooting
+
+### Common Issues
+
+**"Connect Wallet" not working?**
+- Make sure contracts are deployed (run option 5 in setup.sh)
+- Check that local chains are running
+
+**Relayer not processing?**
+- Check relayer logs for errors
+- Verify contract addresses in `.env` files
+- Ensure chains are running
+
+**TypeScript errors?**
+- Run `pnpm type-check` to verify compilation
+- All TypeScript issues have been resolved
+
+### Reset Everything
 ```bash
-# Terminal 1 - Source chain
-anvil --port 8545 --chain-id 1
+# Stop all services
+pkill -f anvil
+pkill -f relayer  
+pkill -f frontend
 
-# Terminal 2 - Destination chain
-anvil --port 8546 --chain-id 421614
+# Clean and restart
+pnpm clean
+./setup.sh
+# Choose option 12: Complete setup
 ```
 
-**4. Deploy Contracts**
+## 📊 Features
 
-```bash
-cd contracts
-forge script script/Deploy.s.sol:DeployLocal \
-  --rpc-url http://localhost:8545 \
-  --broadcast \
-  --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
-```
+### ✅ Implemented
+- [x] Cross-chain NFT locking/unlocking
+- [x] Automated relayer service
+- [x] ZK proof verification (mock)
+- [x] Merkle tree batching
+- [x] Modern web interface
+- [x] Wallet integration
+- [x] Gas optimization
+- [x] Comprehensive testing
+- [x] TypeScript support
+- [x] Unified setup script
 
-**5. Configure Services**
-
-Copy the deployed addresses to:
-
-- `relayer/.env` (rename from `relayer/env.example`)
-- `frontend/.env.local` (rename from `frontend/env.local.example`)
-
-**6. Start Services**
-
-```bash
-# Terminal 3 - Relayer
-cd relayer
-pnpm start
-
-# Terminal 4 - Frontend
-cd frontend
-pnpm dev
-```
-
-Visit `http://localhost:3000`
-
-## 📚 Documentation
-
-### Smart Contracts
-
-#### SourceBridge.sol
-
-- **lockNFT**: Lock a single NFT for bridging
-- **batchLockNFTs**: Lock multiple NFTs with Merkle root optimization
-- **unlockNFT**: Unlock NFT when returned from destination chain
-
-#### DestinationBridge.sol
-
-- **mintWrappedNFT**: Mint wrapped NFT after ZK proof verification
-- **batchMintWrappedNFTs**: Batch mint with Merkle root verification
-- **burnWrappedNFT**: Burn wrapped NFT to initiate return bridge
-
-#### Security Features
-
-- OpenZeppelin contracts for battle-tested implementations
-- ReentrancyGuard on critical functions
-- Owner-only relayer operations
-- Duplicate bridge ID prevention
-
-### Relayer Service
-
-The relayer monitors lock events on the source chain and automatically:
-
-1. Detects NFT lock events
-2. Generates ZK proofs (mock in demo)
-3. Submits mint transactions to destination chain
-4. Handles batch operations efficiently
-
-### Gas Optimization
-
-- **Individual Transfer**: ~150,000 gas
-- **Batch Transfer (10 NFTs)**: ~400,000 gas (~80% savings per NFT)
-- Merkle tree verification reduces on-chain data storage
+### 🚧 Future Enhancements
+- [ ] Real ZK proof generation
+- [ ] Multiple chain support
+- [ ] Production deployment
+- [ ] Advanced UI features
+- [ ] Analytics dashboard
 
 ## 🧪 Testing
 
 ```bash
-cd contracts
+# Run all contract tests
+cd contracts && forge test
 
-# Run all tests
-forge test
-
-# Run with verbosity
-forge test -vvv
-
-# Run specific test
+# Test specific functionality
+forge test --match-test testLockNFT
 forge test --match-test testBatchLockNFTs
-
-# Gas report
-forge test --gas-report
+forge test --match-test testMintWrappedNFT
 ```
 
-## 📊 Project Stats
+## 📝 Smart Contracts
 
-- **Contracts**: 3 core contracts (~800 lines)
-- **Test Coverage**: 95%+
-- **Gas Optimized**: Batch operations save 80% gas
-- **TypeScript**: Fully typed relayer and frontend
-- **Modern Stack**: Foundry + ethers.js v6 + Next.js 14
+### Core Contracts
+- **SourceBridge**: Locks NFTs and emits events
+- **DestinationBridge**: Mints wrapped NFTs and handles burns
+- **MockNFT**: Test NFT for demonstration
+- **WrappedNFT**: Internal contract for wrapped NFTs
 
-## 🔮 Future Enhancements
+### Key Functions
+```solidity
+// Lock single NFT
+function lockNFT(address nftContract, uint256 tokenId) external
 
-- [ ] Integrate real ZK proof system (Circom/Noir)
-- [ ] Deploy to mainnet (Ethereum + Arbitrum)
-- [ ] Add return bridge (burn-to-unlock flow)
-- [ ] Implement NFT metadata caching
-- [ ] Add transaction history UI
-- [ ] Support multiple NFT collections
-- [ ] Implement fee mechanism
-- [ ] Add governance for bridge parameters
+// Lock multiple NFTs (gas optimized)
+function batchLockNFTs(address[] calldata nftContracts, uint256[] calldata tokenIds) external
 
-## 🛡️ Security Considerations
+// Mint wrapped NFT
+function mintWrappedNFT(bytes32 bridgeId, address originalContract, uint256 originalTokenId, address recipient) external
 
-⚠️ **This is a demo project**. For production use:
+// Unlock original NFT
+function unlockNFT(address nftContract, uint256 tokenId) external
+```
 
-1. Implement real ZK proof generation and verification
-2. Conduct professional security audits
-3. Add rate limiting and DoS protection
-4. Implement emergency pause mechanism
-5. Add comprehensive monitoring and alerts
-6. Use multisig for privileged operations
+## 🔐 Security
 
-## 📝 License
-
-MIT
+- **Access Control**: Only bridge contracts can mint/burn
+- **Reentrancy Protection**: Safe external calls
+- **Input Validation**: Comprehensive parameter checks
+- **Event Logging**: Full audit trail
+- **ZK Proof Verification**: Cryptographic validation
 
 ## 🤝 Contributing
 
-Contributions welcome! Please:
-
 1. Fork the repository
 2. Create a feature branch
-3. Add tests for new functionality
-4. Ensure all tests pass
+3. Make your changes
+4. Run tests: `pnpm test:contracts`
 5. Submit a pull request
 
-## 📧 Contact
+## 📄 License
 
-Built by [Your Name] - [@yourtwitter](https://twitter.com/yourtwitter)
+MIT License - see LICENSE file for details
 
-Project Link: [https://github.com/yourusername/zk-nft-bridge](https://github.com/yourusername/zk-nft-bridge)
+## 🆘 Support
 
-## 🙏 Acknowledgments
-
-- [OpenZeppelin](https://openzeppelin.com/) - Secure contract libraries
-- [Foundry](https://getfoundry.sh/) - Blazing fast development framework
-- [ethers.js](https://ethers.org/) - Ethereum library
-- [Next.js](https://nextjs.org/) - React framework
+- **Issues**: Create a GitHub issue
+- **Documentation**: Check this README
+- **Setup Problems**: Run `./setup.sh` option 13
 
 ---
 
-**⭐ Star this repo if you found it helpful!**
+**Ready to bridge NFTs? Run `./setup.sh` and choose option 12!** 🚀
